@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import './App.scss';
+import TodoList from './components/ToDoList';
 
 function App() {
+
+  const [todoList, setTodoList] = useState([
+    { id: 1, title: 'Eating' },
+    { id: 2, title: 'working' }
+  ]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <h1>Welcome to react hooks</h1>
+      <TodoList todos={todoList} onTodoList={handleTodoList} />
     </div>
   );
+
+  function handleTodoList(todo) {
+    const index = todoList.findIndex(x => x.id === todo.id);
+    if (index < 0) return;
+    const newTodoList = [...todoList];
+    newTodoList.splice(index, 1);
+    setTodoList(newTodoList);
+  }
 }
 
 export default App;
